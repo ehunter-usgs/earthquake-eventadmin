@@ -3,24 +3,28 @@
 var EventComparisonView = require('./EventComparisonView'),
     CatalogEvent = require('./CatalogEvent'),
     Collection = require('mvc/Collection'),
+    ModalView = require('mvc/ModalView'),
     Util = require('util/Util'),
     View = require('mvc/View');
 
-
 var AssociatedEventView = function (options) {
-
   var _this,
       _initialize,
 
       // variables
       _associatedEventsEl,
+      _dialog,
       _el,
       _event,
       _subEvents,
 
       // methods
       _disassociateCallback,
-      _createView;
+      _disassociateEvent,
+      _getModalContent,
+      _createView,
+      _onCancel,
+      _onConfirm;
 
   options = Util.extend({}, options);
   _this = View(options);
@@ -56,7 +60,7 @@ var AssociatedEventView = function (options) {
     EventComparisonView({
       el: _associatedEventsEl,
       referenceEvent: _event.getSummary(),
-      collection: Collection(events),
+      collection: new Collection(events),
       buttons: [
         {
           title: 'Disassociate',
@@ -68,17 +72,83 @@ var AssociatedEventView = function (options) {
   };
 
   /**
-   * Disassociates a subevent from the event.
+   * Opens a dialog to confirm the disassociation
    *
    * @param  {object} eventSummary,
    *         summary of the event to be removed
    */
+
   _disassociateCallback = function (eventSummary) {
-    var preferredEventId = _event.getSummary().id;
-    // TODO, disassociate eventSummary.id from _event.getSummary().id (preferred)
-    console.log('preferred id: ' + preferredEventId);
-    console.log('remove id: ' + eventSummary.id);
-    console.log(eventSummary);
+
+    _dialog = new ModalView(_getModalContent(eventSummary), {
+      title: 'Disassociate ' + eventSummary.id + '?',
+      classes: ['disassociate-modal-view'],
+      closable: true,
+      buttons: [
+        {
+          text: 'Yes',
+          classes: [
+            'confirm',
+            'green'
+          ],
+          callback: function () { _onConfirm(eventSummary); }
+        },
+        {
+          text: 'No',
+          classes: [
+            'cancel',
+            'red'
+          ],
+          callback: _onCancel
+        }
+      ]
+    });
+
+    _dialog.show();
+  };
+
+
+  /**
+   * Build content for a modal dialog with detailed information about the
+   * event to be disassociated.
+   *
+   * @param  {object} eventSummary,
+   *         The eventdetails required to send a disassociate product.
+   *
+   * @return {String}
+   *         The markup generated for the disassociate modal dialog.
+   */
+  _getModalContent = function (eventSummary) {
+    var products = _subEvents[eventSummary.id].getProducts();
+
+    // TODO, display collection of products inside ProductsView
+    return '<p>The following products will be removed from this ' +
+        'event with the disassociation:</p>' +
+        '<pre><code>' + JSON.stringify(products, null, '  ') + '</code></pre>';
+  };
+
+  /**
+   * Closes the disassociate model dialog when a user does not confirm the
+   * event disassociation.
+   */
+  _onCancel = function () {
+    // close the form
+    _dialog.hide();
+  };
+
+  /**
+   * Passes along event details for the event to be disassociated. This method
+   * should is called after confirming the disassociate.
+   *
+   * @param  {object} eventSummary,
+   *         the eventdetails required to send a disassociate product.
+   *
+   */
+  _onConfirm = function (eventSummary) {
+    //TODO, call send products page with a disassociate product
+    console.log('disassociating the following event: ' + eventSummary.id);
+    // close the form
+    _dialog.hide();
   };
 
   /**
@@ -88,14 +158,20 @@ var AssociatedEventView = function (options) {
 
     // methods
     _disassociateCallback = null;
+    _disassociateEvent = null;
+    _getModalContent = null;
     _createView = null;
+    _onCancel = null;
+    _onConfirm = null;
 
     // variables
     _associatedEventsEl = null;
+    _dialog = null;
     _el = null;
     _event = null;
     _subEvents = null;
   };
+
 
   _initialize();
   return _this;
