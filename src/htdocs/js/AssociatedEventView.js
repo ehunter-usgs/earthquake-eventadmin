@@ -31,13 +31,18 @@ var AssociatedEventView = function (options) {
 
 
   _initialize = function () {
+    var section = document.createElement('section');
+
     _el = _this.el;
+    _el.appendChild(section);
     _event = CatalogEvent(options.eventDetails);
 
-    _el.innerHTML = '<h3>Associated Events</h3>' +
+    section.className = 'associated-event-view';
+    section.innerHTML = '<h3>Associated Events</h3>' +
         '<div class="associated-events"></div>';
-    _associatedEventsEl = _el.querySelector('.associated-events');
+    _associatedEventsEl = section.querySelector('.associated-events');
 
+    // build the collection table of associated events
     _createView();
     options = null;
   };
