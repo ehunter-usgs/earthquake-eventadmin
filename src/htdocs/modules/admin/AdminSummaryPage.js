@@ -1,7 +1,7 @@
 'use strict';
 
 var AssociatedEventView = require('admin/AssociatedEventView'),
-    ProductsView = require('admin/ProductsView'),
+    ProductsAssociatedView = require('admin/ProductsAssociatedView'),
     EventModulePage = require('base/EventModulePage'),
     Util = require('util/Util');
 
@@ -21,7 +21,7 @@ AdminSummaryPage.prototype._setContentMarkup = function () {
     eventDetails: this._event
   });
 
-  ProductsView({
+  ProductsAssociatedView({
     el: this._content,
     eventDetails: this._event
   });
