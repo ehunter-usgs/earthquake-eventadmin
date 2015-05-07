@@ -2,27 +2,6 @@
 
   margin: 1em 0;
 
-  > button {
-    border-left: 5px solid;
-    margin-right: 1em;
-  }
-
-  .history {
-    border-color: #6ea8ff;
-  }
-
-  .edit {
-    border-color: #3c3;
-  }
-
-  .delete {
-    border-color: #f66;
-  }
-
-  .trump {
-    border-color: #cca8ff;
-  }
-
   @media screen and (max-width: 767px) {
     > button {
       font-size: .8125em;

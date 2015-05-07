@@ -86,6 +86,7 @@ var ProductActionsView = function (options) {
 
     el = _this.el;
     el.classList.add('product-action-view');
+    el.classList.add('button-group');
 
     _buttons = [];
 
