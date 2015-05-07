@@ -93,7 +93,8 @@ var ProductActionsView = function (options) {
       _addButton({
         className: 'edit',
         handler: _this.onEditProduct,
-        text: 'Edit Product'
+        text: 'Edit',
+        title: 'Edit Product'
       });
     }
 
@@ -101,7 +102,8 @@ var ProductActionsView = function (options) {
       _addButton({
         className: 'history',
         handler: _this.onViewHistory,
-        text: 'View History'
+        text: 'View',
+        title: 'View History'
       });
     }
 
@@ -109,7 +111,8 @@ var ProductActionsView = function (options) {
       _addButton({
         className: 'trump',
         handler: _this.onTrumpProduct,
-        text: 'Trump Product'
+        text: 'Trump',
+        title: 'Trump Product'
       });
     }
 
@@ -117,7 +120,8 @@ var ProductActionsView = function (options) {
       _addButton({
         className: 'delete',
         handler: _this.onDeleteProduct,
-        text: 'Delete Product'
+        text: 'Delete',
+        title: 'Delete Product'
       });
     }
   };
@@ -137,15 +141,18 @@ var ProductActionsView = function (options) {
     var button,
         className,
         handler,
-        text;
+        text,
+        title;
 
     className = options.className;
     handler = options.handler;
     text = options.text;
+    title = options.title;
 
     button = document.createElement('button');
     button.classList.add(className);
     button.innerHTML = text;
+    button.setAttribute('title', title);
 
     button.addEventListener('click', handler);
     button._clickHandler = handler;
