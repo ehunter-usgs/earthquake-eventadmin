@@ -103,7 +103,7 @@ var ProductActionsView = function (options) {
       _addButton({
         className: 'history',
         handler: _this.onViewHistory,
-        text: 'View',
+        text: 'History',
         title: 'View History'
       });
     }

@@ -2,6 +2,39 @@
 
   margin: 1em 0;
 
+  > button {
+    text-align: center;
+    font-size: 11px;
+    height: 5em;
+    line-height: 2em;
+    color: #777;
+    padding-top: 6px;
+    width: 60px;
+
+    &:before {
+      display: block;
+      font-size: 15px;
+      color: #333;
+      line-height: 1em;
+    }
+  }
+
+  .history:before {
+    content: '\25F7';
+  }
+
+  .edit:before {
+    content: '\270E';
+  }
+
+  .delete:before {
+    content: '\00D7';
+  }
+
+  .trump:before {
+    content: '\2606';
+  }
+
   @media screen and (max-width: 767px) {
     > button {
       font-size: .8125em;
